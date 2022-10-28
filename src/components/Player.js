@@ -6,8 +6,6 @@ import { ethers } from 'ethers';
 
 function Player({ account, provider, isConnected }) {
 
-    // console.log(isConnected);
-    // console.log(provider);
     const [startGame, setStartGame] = useState(false);
     const [balance, setBalance] = useState(0);
     const navigate = useNavigate();
@@ -16,6 +14,10 @@ function Player({ account, provider, isConnected }) {
     useEffect(() => {
         if (!account) {
             return navigate('/');
+        }
+
+        if (startGame) {
+            return navigate('/game', { replace: true, state: { dog: 'woof' } })
         }
 
         provider.getBalance(account).then((rawBalance) => {
@@ -35,12 +37,6 @@ function Player({ account, provider, isConnected }) {
 
         setStartGame(true);
     }
-
-    useEffect(() => {
-        if (startGame) {
-            return navigate('/game', { replace: true, state: { dog: 'woof' } })
-        }
-    }, [navigate, startGame, account]);
 
     return (
         <div>
