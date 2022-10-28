@@ -1,18 +1,20 @@
 import Button from "react-bootstrap/Button";
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-// function ConnectButton({ getAccount }) {
-//     return (
-//         <Button variant="primary" onClick={getAccount}>
-//             Connect
-//         </Button>
-//     );
-// }
 
-function Home({ getAccount }) {
-    //   console.log("inside home:", playerAccount);
-    //   const [account, setAccount, getAccount] = playerAccount;
 
-    // after click button, should redirect to player page
+function Home({ account, isConnected, getAccount }) {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log("isConnected", isConnected)
+        if (isConnected && account) {
+            // navigate('/player', { replace: true, state: { account: account, isConnect: isConnected } })
+            return navigate('/player');
+        }
+    })
+
 
     return (
         <div>

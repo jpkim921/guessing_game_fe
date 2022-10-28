@@ -1,14 +1,16 @@
 // import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import {Link} from 'react-router-dom';
+
 
 function Header({ account }) {
-  // console.log("hello", playerAccount);
-  // const { account } = playerAccount;
+
+  const homeLink = account ? <Link to='/player'>Home</Link> : <Link to='/'>Home</Link>
 
   return (
     <div>
       <Navbar>
-          <Navbar.Brand href={account ? "/player" : "/"}>Home</Navbar.Brand>
+          <Navbar.Brand>{homeLink}</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             {account ? (
