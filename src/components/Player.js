@@ -8,6 +8,7 @@ function Player({ account, provider, isConnected }) {
 
     const [startGame, setStartGame] = useState(false);
     const [balance, setBalance] = useState(0);
+    const [ante, setAnte] = useState(0.00025);
     const navigate = useNavigate();
 
     // need to set if isConnected === false, redirect to home
@@ -25,6 +26,9 @@ function Player({ account, provider, isConnected }) {
             setBalance(bal);
         })
 
+        // need to get ante from contract and set it
+        // default ante value is 0.00025
+
     });
 
     const ready = async () => {
@@ -34,6 +38,10 @@ function Player({ account, provider, isConnected }) {
         // double check isConnected?
         // check player can pay ante
         // if ante then setStartGame === true and navigate to game page 
+        if (balance < ante) {
+            console.log("Not enough ETH to play.")
+            return
+        }
 
         setStartGame(true);
     }

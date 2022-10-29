@@ -4,8 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 
-function NumberCard({ number }) {
-    const [choice, setChoice] = useState(0);
+function NumberCard({ number, setChoice}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -13,16 +12,15 @@ function NumberCard({ number }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(e.target.value.trim())
-
-        // console.log("before", choice)
-        // setChoice({...choice, e.target.value.trim()})
-        // console.log("after", choice)
+        // console.log(e);
+        // console.log("choice: ", e.target.value.trim())
+        setChoice(number);
         setShow(false);
+        
     }
 
     return (
-        <>
+        <div>
             <Button variant="primary" onClick={handleShow}>
                 {number}
             </Button>
@@ -35,7 +33,7 @@ function NumberCard({ number }) {
                 <Form>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Your Choice</Form.Label>
-                        <Form.Control type="text" placeholder={number} value={number} readOnly />
+                        <Form.Control type="text" name="choice" placeholder={number} value={number} readOnly />
                     </Form.Group>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
@@ -47,28 +45,9 @@ function NumberCard({ number }) {
                     </Modal.Footer>
                 </Form>
             </Modal>
-        </>
+        </div>
     );
 }
-
-
-
-// function NumberCard({ number }) {
-//   return (
-//     <Card style={{ width: '18rem', height: '18rem' }}>
-//       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-//       <Card.Body>
-//       <Card.
-//         <Card.Title>{ number }</Card.Title>
-//         <Card.Text>
-//           Some quick example text to build on the card title and make up the
-//           bulk of the card's content.
-//         </Card.Text>
-//         <Button variant="primary">Pick Me</Button>
-//       </Card.Body>
-//     </Card>
-//   );
-// }
 
 
 export default NumberCard;
