@@ -18,6 +18,7 @@ export default function App() {
         method: "eth_requestAccounts"
       });
       const web3Provider = new ethers.providers.Web3Provider(window.ethereum)
+
       setAccount(accounts[0]);
       setIsConnected(true);
       setProvider(web3Provider);
@@ -36,7 +37,7 @@ export default function App() {
       <Container>
         <Header account={account} />
         <Routes>
-          <Route path="/" element={<Home account={account} getAccount={getAccount} isConnected={isConnected} />} />
+          <Route path="/" element={<Home account={account} getAccount={getAccount} />} />
           <Route path="/player" element={<Player account={account} provider={provider} isConnected={isConnected} />} />
           <Route path="/game" element={<Game account={account} provider={provider} />} />
           <Route />
