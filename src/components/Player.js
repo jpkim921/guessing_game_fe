@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import Button from 'react-bootstrap/Button';
 import { ethers } from 'ethers';
 
-function Player({ account, provider, isConnected }) {
+function Player({ account, provider, isConnected, signer, setSigner }) {
 
     const [startGame, setStartGame] = useState(false);
     const [balance, setBalance] = useState(0);
@@ -18,8 +18,11 @@ function Player({ account, provider, isConnected }) {
         }
 
         if (startGame) {
-            return navigate('/game', { replace: true, state: { dog: 'woof' } })
+            return navigate('/game')
         }
+
+        const player_signer = provider.getSigner();
+        setSigner(player_signer);
 
         provider.getBalance(account).then((rawBalance) => {
             const bal = parseFloat(ethers.utils.formatEther(rawBalance));
@@ -29,12 +32,13 @@ function Player({ account, provider, isConnected }) {
         // need to get ante from contract and set it
         // default ante value is 0.00025
 
-    });
+    }, [account, startGame, provider, navigate, setSigner]);
 
     const ready = async () => {
         console.log("isConnected", isConnected)
         console.log("startGame1", startGame)
         console.log("balance", balance)
+        console.log("signer", signer)
         // double check isConnected?
         // check player can pay ante
         // if ante then setStartGame === true and navigate to game page 

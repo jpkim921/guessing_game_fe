@@ -31,6 +31,7 @@ export default function App() {
   const [account, setAccount] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [provider, setProvider] = useState("");
+  const [signer, setSigner] = useState("");
 
   return (
     <BrowserRouter>
@@ -38,8 +39,8 @@ export default function App() {
         <Header account={account} />
         <Routes>
           <Route path="/" element={<Home account={account} getAccount={getAccount} />} />
-          <Route path="/player" element={<Player account={account} provider={provider} isConnected={isConnected} />} />
-          <Route path="/game" element={<Game account={account} provider={provider} />} />
+          <Route path="/player" element={<Player account={account} provider={provider} isConnected={isConnected} signer={signer} setSigner={setSigner} />} />
+          <Route path="/game" element={<Game account={account} provider={provider} signer={signer} />} />
           <Route />
         </Routes>
       </Container>

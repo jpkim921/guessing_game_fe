@@ -8,7 +8,8 @@ import NumberCard from './NumberCard';
 import CardTable from "./CardTable";
 
 
-function Game({ account, provider }) {
+function Game({ account, provider, signer }) {
+    // console.log("signer", signer);
     // console.log("account", account);
     // console.log("provider", provider);
 
