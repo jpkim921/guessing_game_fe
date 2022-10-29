@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,16 +14,23 @@ function Game({ account, provider }) {
 
     const [round, setRound] = useState(1);
     const [choice, setChoice] = useState(0);
+    const [numbers, setNumbers] = useState([])
 
-    let numbers = [];
+    // let numbers = [];
 
-    for (let i = 1; i <= 2 ** round; i++) {
-        if (i < 10) {
-            numbers.push("0" + i.toString());
-        } else {
-            numbers.push(i.toString());
+    useEffect(() => {
+        const choices = []
+        for (let i = 1; i <= 2 ** round; i++) {
+            if (i < 10) {
+                choices.push("0" + i.toString());
+            } else {
+                choices.push(i.toString());
+            }
         }
-    }
+        console.log(choices);
+        setNumbers(choices)
+        // console.log("n", numbers);
+    }, [round, setNumbers])
 
 
     return (
@@ -32,7 +39,7 @@ function Game({ account, provider }) {
             <Container>
                 <Row>
                     {numbers.map((number, idx) => (
-                        <Col xs key={idx} ><NumberCard number={number} setChoice={setChoice} /></Col>
+                        <Col xs key={idx} ><NumberCard number={number} setChoice={setChoice} round={round} setRound={setRound} /></Col>
                     ))}
                 </Row>
             </Container>

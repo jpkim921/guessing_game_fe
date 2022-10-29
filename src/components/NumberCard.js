@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 
-function NumberCard({ number, setChoice}) {
+function NumberCard({ number, setChoice, round, setRound}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -15,6 +15,8 @@ function NumberCard({ number, setChoice}) {
         // console.log(e);
         // console.log("choice: ", e.target.value.trim())
         setChoice(number);
+        const nextRound = round + 1
+        setRound(nextRound);
         setShow(false);
         
     }
