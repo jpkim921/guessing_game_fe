@@ -8,7 +8,7 @@ import NumberCard from './NumberCard';
 import CardTable from "./CardTable";
 
 
-function Game({ account, provider, signer }) {
+function Game({ account, provider, signer, gameContract }) {
     // console.log("signer", signer);
     // console.log("account", account);
     // console.log("provider", provider);
@@ -40,7 +40,7 @@ function Game({ account, provider, signer }) {
             <Container>
                 <Row>
                     {numbers.map((number, idx) => (
-                        <Col xs key={idx} ><NumberCard number={number} setChoice={setChoice} round={round} setRound={setRound} /></Col>
+                        <Col xs key={idx} ><NumberCard number={number} setChoice={setChoice} round={round} setRound={setRound} provider={provider} signer={signer} gameContract={gameContract}/></Col>
                     ))}
                 </Row>
             </Container>

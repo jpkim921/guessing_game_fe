@@ -4,21 +4,36 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
 
-function NumberCard({ number, setChoice, round, setRound}) {
+function NumberCard({ number, setChoice, round, setRound, provider, signer, gameContract }) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const submitSelection = async () => {
+        const tx = await gameContract.connect(signer).functions.submitGuess(number);
+        const receipt = await tx.wait()
+        console.log(receipt);
+        return receipt;
+
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         // console.log(e);
         // console.log("choice: ", e.target.value.trim())
+
         setChoice(number);
+
+        submitSelection()
+            .then((res) => {
+                console.log("res", res)
+            })
+
         const nextRound = round + 1
         setRound(nextRound);
         setShow(false);
-        
+
     }
 
     return (
