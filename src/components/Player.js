@@ -56,15 +56,11 @@ function Player({ account, provider, isConnected, signer, setSigner, gameContrac
 
     const playerReadyPayAnte = async () => {
         
-        console.log("ante inside playerReadyPayAnte", ante.toString());
-
         const tx = await gameContract.connect(signer).functions.playerReadyPayAnte({ value: ante.toString() });
         const receipt = await tx.wait();
 
         await gameContract.once("PlayerReady(address, bool)", (player, playerReady) => {
-            console.log("ante was paid. about to start game.")
             setStartGame(playerReady);
-            console.log("after setStartGame")
         })
 
         // const evnt = gameContract.filters.PlayerReady(account, true)

@@ -35,7 +35,6 @@ function Game({ account, provider, signer, gameContract }) {
                 choices.push(i.toString());
             }
         }
-        console.log(choices);
         setNumbers(choices)
         // console.log("n", numbers);
     }, [round, setNumbers, gameOver])
