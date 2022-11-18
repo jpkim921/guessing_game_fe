@@ -77,14 +77,6 @@ function Player({ account, provider, isConnected, signer, setSigner, gameContrac
 
 
     const ready = async () => {
-        // console.log("isConnected", isConnected)
-        // console.log("startGame1", startGame)
-        // console.log("balance", balance)
-        // console.log('ante', ante)        
-        // console.log('ante', ante / weiPerEther);
-        // console.log("signer", await signer.getAddress())
-        // double check isConnected?
-        // check player can pay ante
         // if ante then setStartGame === true and navigate to game page 
         if (balance < ante / weiPerEther) {
             console.log("Not enough ETH to play.")
