@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import Button from 'react-bootstrap/Button';
 import { ethers } from 'ethers';
 
-function Player({ account, provider, isConnected }) {
+const houseArtifact = require('../abi/house.json');
+
+const weiPerEther = ethers.constants.WeiPerEther;
+
+
+
+function Player({ account, provider, isConnected, signer, setSigner, gameContract, setGameContract }) {
 
     const [startGame, setStartGame] = useState(false);
     const [balance, setBalance] = useState(0);
-    const [ante, setAnte] = useState(0.00025);
+    const [ante, setAnte] = useState(250000000000000);
     const navigate = useNavigate();
+    // const provider = ethers.provider;
 
     // need to set if isConnected === false, redirect to home
     useEffect(() => {
@@ -17,33 +24,63 @@ function Player({ account, provider, isConnected }) {
             return navigate('/');
         }
 
-        if (startGame) {
-            return navigate('/game', { replace: true, state: { dog: 'woof' } })
+        if (!gameContract) {
+            const connectedGameContract = new ethers.Contract(houseArtifact.address, houseArtifact.abi, provider);
+
+            connectedGameContract.functions.ante().then(res => {
+                let [anteFromContract] = res;
+                setAnte(anteFromContract);
+            });
+
+            setGameContract(connectedGameContract);
         }
 
+        
+
+        if (startGame) {
+            return navigate('/game')
+        }
+
+        const player_signer = provider.getSigner();
+        setSigner(player_signer);
+
         provider.getBalance(account).then((rawBalance) => {
-            const bal = parseFloat(ethers.utils.formatEther(rawBalance));
+            
+            const bal = parseFloat(ethers.utils.formatEther(rawBalance)).toString();
+            // const bal = parseFloat(ethers.utils.formatEther(rawBalance));
             setBalance(bal);
         })
 
-        // need to get ante from contract and set it
-        // default ante value is 0.00025
+    }, [account, startGame, provider, navigate, setSigner, gameContract, setGameContract]);
 
-    });
+
+    const playerReadyPayAnte = async () => {
+        
+        const tx = await gameContract.connect(signer).functions.playerReadyPayAnte({ value: ante.toString() });
+        const receipt = await tx.wait();
+
+        await gameContract.once("PlayerReady(address, bool)", (player, playerReady) => {
+            setStartGame(playerReady);
+        })
+
+        // const evnt = gameContract.filters.PlayerReady(account, true)
+
+        // const readyEvent = gameContract.filters.PlayerReady(account, true)
+        // const blockNumber = 3;
+        // const readyEvent = await gameContract.queryFilter("PlayerReady(address, bool)", 1, 2);
+        // console.log(readyEvent);
+    }
+
 
     const ready = async () => {
-        console.log("isConnected", isConnected)
-        console.log("startGame1", startGame)
-        console.log("balance", balance)
-        // double check isConnected?
-        // check player can pay ante
         // if ante then setStartGame === true and navigate to game page 
-        if (balance < ante) {
+        if (balance < ante / weiPerEther) {
             console.log("Not enough ETH to play.")
             return
         }
 
-        setStartGame(true);
+        playerReadyPayAnte();
+        // setStartGame(true);
     }
 
     return (
@@ -54,6 +91,7 @@ function Player({ account, provider, isConnected }) {
             </h1>
             <p className="caption">Your balance is</p>
             <h1 className="balance">{balance} ETH</h1>
+            {/* <h1 className="Ante">{ethers.utils.formatEther(ante)} ETH</h1> */}
             <Button variant="primary" onClick={ready}>Pay and Play</Button>{' '}
         </div>
     )

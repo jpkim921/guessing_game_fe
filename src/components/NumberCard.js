@@ -3,22 +3,58 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import React, { useState } from 'react';
+// import { Navigate, useNavigate } from "react-router-dom";
 
-function NumberCard({ number, setChoice, round, setRound}) {
+
+function NumberCard({ number, setChoice, round, setRound, provider, signer, gameContract, setGameOver }) {
+    // const navigate = useNavigate();
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleSubmit = e => {
+    const submitSelection = async () => {
+        const tx = await gameContract.connect(signer).functions.submitGuess(number, round);
+        const receipt = await tx.wait()
+        return receipt;
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(e);
         // console.log("choice: ", e.target.value.trim())
+
+
+        await gameContract.on("RoundFinished(bool, uint, uint)", (win, numberToMatch, updatedWinnings) => {
+            console.log("RoundFinished Event")
+            console.log("win", "numberToMatch", "updatedWinnings")
+            console.log(win, numberToMatch, updatedWinnings)
+            const nextRound = round + 1
+            setRound(nextRound);
+        })
+
+        await gameContract.on("GameFinished(bool, uint, uint)", (win, numberToMatch, updatedWinnings) => {
+            console.log("GameFinished Event")
+            console.log("win", "numberToMatch", "updatedWinnings")
+            console.log(win, numberToMatch, updatedWinnings)
+            setGameOver(!win)
+            // return navigate('/game')
+        })
+
         setChoice(number);
-        const nextRound = round + 1
-        setRound(nextRound);
-        setShow(false);
+
+        submitSelection()
+            .then((res) => {
+                console.log("res", res)
+            })
+
         
+
+        // const nextRound = round + 1
+        // setRound(nextRound);
+        setShow(false);
+
     }
 
     return (

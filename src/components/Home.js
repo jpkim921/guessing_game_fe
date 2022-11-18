@@ -4,13 +4,11 @@ import { useEffect } from 'react';
 
 
 
-function Home({ account, isConnected, getAccount }) {
+function Home({ account, getAccount }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("isConnected", isConnected)
-        if (isConnected && account) {
-            // navigate('/player', { replace: true, state: { account: account, isConnect: isConnected } })
+        if (account) {
             return navigate('/player');
         }
     })
@@ -19,7 +17,6 @@ function Home({ account, isConnected, getAccount }) {
     return (
         <div>
             <h1>Connect Component</h1>
-            {/* <ConnectButton getAccount={{ getAccount }} /> */}
             <Button variant="primary" onClick={getAccount}>
                 Connect
             </Button>
