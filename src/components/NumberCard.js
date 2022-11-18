@@ -11,17 +11,16 @@ function NumberCard({ number, setChoice, round, setRound, provider, signer, game
     const handleShow = () => setShow(true);
 
     const submitSelection = async () => {
-        const tx = await gameContract.connect(signer).functions.submitGuess(number);
+        const tx = await gameContract.connect(signer).functions.submitGuess(number, round);
         const receipt = await tx.wait()
-        console.log(receipt);
         return receipt;
-
     }
 
     const handleSubmit = e => {
         e.preventDefault();
         // console.log(e);
         // console.log("choice: ", e.target.value.trim())
+        
 
         setChoice(number);
 
@@ -29,6 +28,8 @@ function NumberCard({ number, setChoice, round, setRound, provider, signer, game
             .then((res) => {
                 console.log("res", res)
             })
+
+        
 
         const nextRound = round + 1
         setRound(nextRound);
