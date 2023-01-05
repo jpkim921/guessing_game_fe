@@ -1,4 +1,4 @@
-#Guessing Game
+# Guessing Game
 A simple guessing game that uses a smart contract as the house.
 
 In this guessing game a player first connects their wallet and pays ante to start the game.
@@ -11,7 +11,7 @@ In the following rounds, the choices keep doubling until Round 5 where the choic
 
 When a player wins a round, then move on and win a certain amount of ETH. Game ends when the choice doesn't match.
 
-#Thoughs
+# Thoughts
 Initially, I started this project to refresh my knowledge of React, Hardhat, and the interaction between the client and smart contract. There was definitely a moment where I thought I forgot too much but it all came back rather quickly.
 
 This is pretty rough and I can improve upon this a lot. I don't like the way I have to confirm every submission through the wallet. I think this type of game would be best to mix off-chain and on-chain solution.
