@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+#Guessing Game
+A simple guessing game that uses a smart contract as the house.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In this guessing game a player first connects their wallet and pays ante to start the game.
+This game is event driven from the emiited events from the contract which is the House.
+When a player pays the ante, we filter for the `AntePaid` event which allows React the route to the Player page.
 
-## Available Scripts
+The player can then pay an ante of 0.00025 ETH and when that is confirmed, we move on a game of 5 rounds.
+Round one is a choice between the numbers 1 and 2 which the player selects and confirms submission through their wallet.
+In the following rounds, the choices keep doubling until Round 5 where the choices range from 1 to 32.
 
-In the project directory, you can run:
+When a player wins a round, then move on and win a certain amount of ETH. Game ends when the choice doesn't match.
+
+#Thoughs
+Initially, I started this project to refresh my knowledge of React, Hardhat, and the interaction between the client and smart contract. There was definitely a moment where I thought I forgot too much but it all came back rather quickly.
+
+This is pretty rough and I can improve upon this a lot. I don't like the way I have to confirm every submission through the wallet. I think this type of game would be best to mix off-chain and on-chain solution.
+
+
+
+# Getting Started  
+
+Need to have hardhat running for the local environment. [GuessingGame SC](https://github.com/jpkim921/guessing_game)
+Once you have localhost running, in the project directory, you can the below and click connect to start.
 
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
