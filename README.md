@@ -22,6 +22,7 @@ This is pretty rough and I can improve upon this a lot. I don't like the way I h
 
 Need to have hardhat running for the local environment. [GuessingGame SC](https://github.com/jpkim921/guessing_game)
 Once you have localhost running, in the project directory, you can the below and click connect to start.
+When connecting the wallet, make sure to have a custom hardhat network in the network list. 
 
 ### `npm start`
 
